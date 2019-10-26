@@ -16,9 +16,9 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->integer('jkc_registry');
-            $table->integer('fbk_registry');
-            $table->integer('cbk_registry');
+            $table->bigInteger('jkc_registry');
+            $table->bigInteger('fbk_registry');
+            $table->bigInteger('cbk_registry');
             $table->integer('class_id');
             $table->integer('graduation_id');
             $table->string('name', 255);
@@ -32,6 +32,8 @@ class CreateStudentsTable extends Migration
             $table->integer('house_number', 255);
             $table->string('state', 255);
             $table->string('city', 255);
+            $table->string('rg', 255);
+            $table->string('cpf', 255);
         });
     }
 
