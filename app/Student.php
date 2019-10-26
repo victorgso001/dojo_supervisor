@@ -2,25 +2,29 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class Student extends Model
 {
     protected $table = 'students';
 
-    public function dojo_class() {
+    public function dojoClass()
+    {
         return $this->hasOne('App\Class');
     }
 
-    public function payments() {
+    public function payments()
+    {
         return $this->hasMany('App\Payment');
     }
 
-    public function teacher() {
+    public function teacher()
+    {
         return $this->hasMany('App\Teacher');
     }
 
-    public function graduation() {
+    public function graduation()
+    {
         return $this->hasOne('App\Graduation');
     }
 }
