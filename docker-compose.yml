@@ -10,6 +10,8 @@ services:
       - 8010:80
     links:
       - mongo
+    networks:
+      - mongo-compose-network
 
   mongo-express:
     image: mongo-express
