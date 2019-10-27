@@ -13,3 +13,4 @@ yarn-error.log
 .env
 .env.testing
 yarn.lock
+composer.lock
