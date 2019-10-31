@@ -15,6 +15,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    container_name: mongo_express
     ports:
       - 8081:8081
     environment:
@@ -30,6 +31,7 @@ services:
 
   mongo:
     image: mongo
+    container_name: mongo_db
     environment:
       MONGO_INITDB_ROOT_USERNAME: dojo_jkc_admin
       MONGO_INITDB_ROOT_PASSWORD: 123456
