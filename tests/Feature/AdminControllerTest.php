@@ -95,6 +95,10 @@ class AdminControllerTest extends TestCase
             ]
         );
 
+        $adminDb = Admin::where('username', $this->admin->username)->first();
+
+        $token = $adminDb->token;
+
         $response->assertStatus(200);
         $response->assertJsonFragment(['Login realizado com sucesso.']);
         $response->assertJsonStructure([
@@ -102,6 +106,7 @@ class AdminControllerTest extends TestCase
             'user',
             'message',
         ]);
+        $response->assertHeader('token', $token);
     }
 
     protected function tearDown(): void
