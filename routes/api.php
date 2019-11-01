@@ -21,6 +21,10 @@ Route::prefix('auth')->group(function () {
     Route::post('login', 'AdminController@login');
 });
 
+Route::group(['middleware' => ['auth']], function () {
+
+});
+
 // Route::group(['namespace' => 'API'], function () {
 //     Route::post('login', 'AdminController@login');
 // });
