@@ -61,6 +61,8 @@ class AdminController extends Controller
 
         $admin->token = md5($token);
 
+        $admin->save();
+
         return response([
                 'username' => $admin->username,
                 'user' => $admin->user,
