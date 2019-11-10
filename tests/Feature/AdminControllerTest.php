@@ -106,7 +106,52 @@ class AdminControllerTest extends TestCase
             'user',
             'message',
         ]);
-        $response->assertHeader('token', $token);
+        $this->assertEquals($token, md5($response->headers->get('token')));
+    }
+
+    public function testSplashScreenWithoutToken()
+    {
+        $response = $this->json(
+            'POST',
+            '/api/auth/splash',
+            [
+                'token' => null,
+            ]
+        );
+
+        $response->assertStatus(401);
+        $response->assertJsonFragment(['Token vazio. Favor fazer login.']);
+    }
+
+    public function testSplashScreenWithInvalidToken()
+    {
+        $response = $this->json(
+            'POST',
+            '/api/auth/splash',
+            [
+                'token' => 'invalidToken',
+            ]
+        );
+
+        $response->assertStatus(401);
+        $response->assertJsonFragment(['Token inválido. Favor refazer login']);
+    }
+
+    public function testSplashScreenValidLogin()
+    {
+        $token = \Str::random(60);
+        $this->admin->token = md5($token);
+        $this->admin->save();
+        $response = $this->json(
+            'POST',
+            '/api/auth/splash',
+            [
+                'token' => $token
+            ]
+        );
+
+        $response->assertStatus(200);
+        $response->assertJsonFragment(['Login realizado com sucesso.']);
     }
 
     protected function tearDown(): void
