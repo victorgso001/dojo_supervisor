@@ -69,4 +69,42 @@ class AdminController extends Controller
                 'message' => 'Login realizado com sucesso.',
             ], 200)->header('token', $token);
     }
+
+    public function splash(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'token' => 'required',
+            ],
+            $messages = [
+                'required' => ':attribute vazio. Favor fazer login.',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response([
+                'error_info' => 'empty_token',
+                'message' => ucfirst($errors->first()),
+            ], 401);
+        }
+
+        $admin = Admin::where('token', md5($request->token))->first();
+
+        if (!$admin) {
+            return response([
+                'error_info' => 'invalid_token',
+                'message' => 'Token inválido. Favor refazer login',
+            ], 401);
+        }
+
+        $admin->token = md5(\Str::random(60));
+        $admin->save();
+
+        return response([
+            'message' => 'Login realizado com sucesso.',
+            'username' => $admin->username,
+        ], 200)->header('token', $token);
+    }
 }

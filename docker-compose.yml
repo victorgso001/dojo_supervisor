@@ -17,7 +17,7 @@ services:
     image: mongo-express
     container_name: mongo_express
     ports:
-      - 8081:8081
+      - 8080:8081
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: dojo_jkc
       ME_CONFIG_BASICAUTH_PASSWORD: 123456
