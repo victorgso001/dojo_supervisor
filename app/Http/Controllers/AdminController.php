@@ -99,9 +99,12 @@ class AdminController extends Controller
             ], 401);
         }
 
+        $admin->token = md5(\Str::random(60));
+        $admin->save();
+
         return response([
             'message' => 'Login realizado com sucesso.',
             'username' => $admin->username,
-        ], 200);
+        ], 200)->header('token', $token);
     }
 }
