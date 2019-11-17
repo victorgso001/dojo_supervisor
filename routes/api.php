@@ -23,8 +23,5 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::post('student', 'StudentController@create');
 });
-
-// Route::group(['namespace' => 'API'], function () {
-//     Route::post('login', 'AdminController@login');
-// });
