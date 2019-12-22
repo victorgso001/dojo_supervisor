@@ -62,7 +62,8 @@ class StudentControllerTest extends TestCase
         ]);
     }
 
-    public function testCanCreateNewStudent() {
+    public function testCanCreateNewStudent()
+    {
         $student = factory(Student::class)->make();
         $response = $this->withHeaders([
             'token' => $this->admin->token,
