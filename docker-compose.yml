@@ -1,17 +1,29 @@
 version: '3.3'
 services:
   app:
-    image: lissonpsantos2/ubuntu-phps:latest
-    container_name: dojo_supervisor_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dojoapp_api
     volumes:
       - ./:/home/project-folder
-    command: bash -c "selectphp 7.2 && apachelinker /home/project-folder/public && tail -f /tmp/dev.log"
     ports:
       - 8010:80
     links:
       - mongo
     networks:
-      - mongo-compose-network
+      - app-network
+
+  webserver:
+    image: victorgso001/nginx-server
+    container_name: webserver
+    tty: true
+    ports:
+      - "8002:80"
+    volumes:
+      - ./:/home/project-folder
+    networks:
+      - app-network
 
   mongo-express:
     image: mongo-express
@@ -27,7 +39,7 @@ services:
     links:
       - mongo
     networks:
-      - mongo-compose-network
+      - app-network
 
   mongo:
     image: mongo
@@ -40,8 +52,8 @@ services:
     volumes:
       - /server:/data/db
     networks:
-      - mongo-compose-network
+      - app-network
 
 networks:
-    mongo-compose-network:
-      driver: bridge
+  app-network:
+    driver: bridge
