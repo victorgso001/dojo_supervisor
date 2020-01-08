@@ -9,13 +9,13 @@ class Auth
 {
     public function handle($request, Closure $next)
     {
-        if ($request->token == '') {
+        if ($request->header('token') == '') {
             return response([
                 'error_code' => 'empty_token',
             ], 401);
         }
 
-        $admin = Admin::where('token', $request->token)->first();
+        $admin = Admin::where('token', $request->header('token'))->first();
 
         if (!$admin) {
             return response([
