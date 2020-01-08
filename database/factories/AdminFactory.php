@@ -10,5 +10,6 @@ $factory->define(Admin::class, function (Faker $faker) {
         'username' => $faker->userName,
         'password' => $faker->password,
         'user' => $faker->name,
+        'token' => md5(\Str::random(60)),
     ];
 });

@@ -105,6 +105,6 @@ class AdminController extends Controller
         return response([
             'message' => 'Login realizado com sucesso.',
             'username' => $admin->username,
-        ], 200)->header('token', $token);
+        ], 200)->header('token', $admin->token);
     }
 }
