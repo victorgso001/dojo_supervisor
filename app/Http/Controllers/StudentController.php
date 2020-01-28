@@ -73,6 +73,7 @@ class StudentController extends Controller
         $student->student_rg = $request->student_rg;
         $student->student_cpf = $request->student_cpf;
         $student->name = $request->name;
+        $student->inscription_date = $request->inscription_date ? $request->inscription_date : null;
         $student->birthday = !empty($request->birthday) ? $request->birthday : null;
         $student->father_name = !empty($request->father_name) ? $request->father_name : null;
         $student->mother_name = !empty($request->mother_name) ? $request->mother_name : null;

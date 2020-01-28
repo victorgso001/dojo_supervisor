@@ -72,8 +72,12 @@ class AdminController extends Controller
 
     public function splash(Request $request)
     {
+        $token = [
+            'token' => $request->header('token'),
+        ];
+
         $validator = Validator::make(
-            $request->all(),
+            $token,
             [
                 'token' => 'required',
             ],
@@ -87,10 +91,10 @@ class AdminController extends Controller
             return response([
                 'error_info' => 'empty_token',
                 'message' => ucfirst($errors->first()),
-            ], 401);
+            ], 422);
         }
 
-        $admin = Admin::where('token', md5($request->token))->first();
+        $admin = Admin::where('token', md5($request->header('token')))->first();
 
         if (!$admin) {
             return response([
@@ -98,9 +102,6 @@ class AdminController extends Controller
                 'message' => 'Token inválido. Favor refazer login',
             ], 401);
         }
-
-        $admin->token = md5(\Str::random(60));
-        $admin->save();
 
         return response([
             'message' => 'Login realizado com sucesso.',
