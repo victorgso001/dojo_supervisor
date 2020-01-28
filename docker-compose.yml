@@ -1,14 +1,10 @@
 version: '3.3'
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: victorgso001/alpine-php-mongo:latest
     container_name: dojoapp_api
     volumes:
       - ./:/home/project-folder
-    ports:
-      - 8010:80
     links:
       - mongo
     networks:
@@ -24,6 +20,7 @@ services:
       - ./:/home/project-folder
     networks:
       - app-network
+      - default
 
   mongo-express:
     image: mongo-express
