@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', 'AdminController@login');
-    Route::post('splash', 'AdminController@splash');
+    Route::get('splash', 'AdminController@splash');
 });
 
 Route::group(['middleware' => ['auth']], function () {
