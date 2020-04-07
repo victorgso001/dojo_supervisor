@@ -10,12 +10,12 @@ services:
     networks:
       - app-network
 
-  webserver:
+  webserver_dojo:
     image: victorgso001/nginx-server
-    container_name: webserver
+    container_name: webserver_dojo
     tty: true
     ports:
-      - "8002:80"
+      - "8005:80"
     volumes:
       - ./:/home/project-folder
     networks:
