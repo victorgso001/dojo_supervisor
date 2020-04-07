@@ -16,9 +16,37 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $skip = $request->skip;
+        $take = $request->take;
+        $name = $request->name;
+        $students = Student::where('active', '1');
+
+        $count = $students->count();
+
+        $students = $students->where('name', '%like%', $name)
+            ->skip($skip)
+            ->take($take)
+            ->get(['name', 'status']);
+
+
+
+        if (empty($students)) {
+            return response(
+                [
+                    'error_info' => 'empty_list',
+                    'message' => 'Não existem alunos cadastrados'
+                ], 412
+            );
+        }
+
+        return response(
+            [
+                'students' => $students,
+                'count' => ceil($count/$skip),
+            ]
+        );
     }
 
     /**
@@ -84,6 +112,8 @@ class StudentController extends Controller
         $student->address_number = !empty($request->address_number) ? $request->address_number : null;
         $student->address_state = !empty($request->address_state) ? $request->address_state: null;
         $student->address_city = !empty($request->address_city) ? $request->address_city : null;
+        $student->active = 1;
+        $student->situation = 'compliant';
 
         $student->save();
 
