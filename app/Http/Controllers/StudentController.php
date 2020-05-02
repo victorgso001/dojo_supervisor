@@ -44,7 +44,7 @@ class StudentController extends Controller
         return response(
             [
                 'students' => $students,
-                'count' => ceil($count/$skip),
+                'count' => $count == 0 ? 0 : ceil($count/$take),
             ]
         );
     }
