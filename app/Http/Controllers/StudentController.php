@@ -18,19 +18,28 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $skip = $request->skip;
-        $take = $request->take;
-        $name = $request->name;
-        $students = Student::where('active', '1');
+        $skip = !$request->skip ? 0 : (int) $request->skip;
+        $take = $request->take ? (int) $request->take : 20;
+        $name = $request->name ? $request->name : '';
+        $active = !$request->active ? 0 : (int) $request->active;
+        $status = !$request->status ? 0 : $request->status;
+
+        $students = Student::where('active', $active);
 
         $count = $students->count();
 
-        $students = $students->where('name', '%like%', $name)
-            ->skip($skip)
+        if (!empty($name)) {
+            $students = $students->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($status)) {
+            $students = $students->where('status', $status);
+        }
+
+
+        $students = $students->skip($skip)
             ->take($take)
             ->get(['name', 'status']);
-
-
 
         if (empty($students)) {
             return response(
@@ -44,7 +53,8 @@ class StudentController extends Controller
         return response(
             [
                 'students' => $students,
-                'count' => $count == 0 ? 0 : ceil($count/$take),
+                'count' => $count,
+                'pages' => $count == 0 ? 0 : ceil($count/$take),
             ]
         );
     }
@@ -113,7 +123,7 @@ class StudentController extends Controller
         $student->address_state = !empty($request->address_state) ? $request->address_state: null;
         $student->address_city = !empty($request->address_city) ? $request->address_city : null;
         $student->active = 1;
-        $student->situation = 'compliant';
+        $student->status = 1;
 
         $student->save();
 
