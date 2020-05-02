@@ -6,6 +6,8 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class Student extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+
     protected $table = 'students';
 
     public function dojoClass()
