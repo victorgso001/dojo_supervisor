@@ -134,17 +134,6 @@ class StudentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Student  $student
@@ -152,18 +141,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Student  $student
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Student $student)
-    {
-        //
+        return response([
+            'student' => $student,
+        ]);
     }
 
     /**
