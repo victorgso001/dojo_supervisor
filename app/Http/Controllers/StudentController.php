@@ -175,7 +175,14 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $input = $request->all();
+
+        $student->update($input);
+
+        return response([
+            'message' => 'Dados do aluno atualizados com sucesso',
+            'student' => $student->id,
+        ]);
     }
 
     /**
