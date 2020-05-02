@@ -16,9 +16,47 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $skip = !$request->skip ? 0 : (int) $request->skip;
+        $take = $request->take ? (int) $request->take : 20;
+        $name = $request->name ? $request->name : '';
+        $active = !$request->active ? 0 : (int) $request->active;
+        $status = !$request->status ? 0 : $request->status;
+
+        $students = Student::where('active', $active);
+
+        $count = $students->count();
+
+        if (!empty($name)) {
+            $students = $students->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($status)) {
+            $students = $students->where('status', $status);
+        }
+
+
+        $students = $students->skip($skip)
+            ->take($take)
+            ->get(['name', 'status']);
+
+        if (empty($students)) {
+            return response(
+                [
+                    'error_info' => 'empty_list',
+                    'message' => 'Não existem alunos cadastrados'
+                ], 412
+            );
+        }
+
+        return response(
+            [
+                'students' => $students,
+                'count' => $count,
+                'pages' => $count == 0 ? 0 : ceil($count/$take),
+            ]
+        );
     }
 
     /**
@@ -84,6 +122,8 @@ class StudentController extends Controller
         $student->address_number = !empty($request->address_number) ? $request->address_number : null;
         $student->address_state = !empty($request->address_state) ? $request->address_state: null;
         $student->address_city = !empty($request->address_city) ? $request->address_city : null;
+        $student->active = 1;
+        $student->status = 1;
 
         $student->save();
 

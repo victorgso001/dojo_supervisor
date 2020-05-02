@@ -23,5 +23,5 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::post('student', 'StudentController@create');
+    Route::resource('student', 'StudentController');
 });

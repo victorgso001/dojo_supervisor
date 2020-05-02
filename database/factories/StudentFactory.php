@@ -23,5 +23,7 @@ $factory->define(Student::class, function (Faker $faker) {
         'address_number' => $faker->numerify('###'),
         'address_state' => $faker->state,
         'address_city' => $faker->city,
+        'active' => rand(0, 1),
+        'status' => rand(0, 1),
     ];
 });
