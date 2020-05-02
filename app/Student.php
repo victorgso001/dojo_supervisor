@@ -8,6 +8,8 @@ class Student extends Model
 {
     protected $table = 'students';
 
+    protected $guarded = ['id'];
+
     public function dojoClass()
     {
         return $this->hasOne('App\Class');
