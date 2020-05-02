@@ -186,6 +186,17 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+        if (!$student->trashed()) {
+            return response ([
+                'error_info' => 'cannot_remove_student',
+                'message' => 'Não foi possível remover o aluno. Tente novamente mais tarde.',
+            ], 400);
+        }
+
+        return response ([
+            'message' => 'Aluno removido com sucesso.',
+            'student' => $student->name,
+        ]);
     }
 }
