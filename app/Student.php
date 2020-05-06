@@ -3,10 +3,11 @@
 namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model;
+use \Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'students';
 
