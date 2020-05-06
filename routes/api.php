@@ -24,4 +24,5 @@ Route::prefix('auth')->group(function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('student', 'StudentController');
+    Route::apiResource('payment', 'PaymentController');
 });
