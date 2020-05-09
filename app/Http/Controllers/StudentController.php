@@ -26,8 +26,6 @@ class StudentController extends Controller
 
         $students = Student::where('active', $active);
 
-        $count = $students->count();
-
         if (!empty($name)) {
             $students = $students->where('name', 'like', "%$name%");
         }
@@ -49,6 +47,8 @@ class StudentController extends Controller
                 ], 412
             );
         }
+
+        $count = $students->count();
 
         return response(
             [
