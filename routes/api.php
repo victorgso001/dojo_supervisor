@@ -25,4 +25,8 @@ Route::prefix('auth')->group(function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::apiResource('payment', 'PaymentController');
     Route::apiResource('student', 'StudentController');
+    Route::apiResource('admin', 'AdminController');
+    // Route::post('admin/create', 'AdminController@create');
+    // Route::put('admin/{admin}', 'AdminController@update');
+    // Route::delete('admin/{admin}', 'AdminController@destroy');
 });
